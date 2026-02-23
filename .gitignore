@@ -1,0 +1,14 @@
+# NetBeans build outputs
+**/build/
+**/dist/
+**/out/
+
+# NetBeans private settings
+**/nbproject/private/
+
+# Java artifacts
+**/*.class
+
+# OS clutter
+Thumbs.db
+*.log
