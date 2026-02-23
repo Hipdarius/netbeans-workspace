@@ -36,7 +36,7 @@ public class DrawPanel extends javax.swing.JPanel {
     }
     
     public int getSquareSide() {
-        return Math.min(getWidth(), getHeight() / 8);
+        return Math.min(getWidth(), getHeight()) / 8;
     }
 
     /**
