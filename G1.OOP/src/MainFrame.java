@@ -2,7 +2,6 @@
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
-import javax.swing.DefaultListModel;
 import javax.swing.JColorChooser;
 
 /*
@@ -11,25 +10,25 @@ import javax.swing.JColorChooser;
  */
 /**
  *
- * @author phili
+ * @author darius
  */
 public class MainFrame extends javax.swing.JFrame {
 
-    private final ShapeList<Shape> shapes = new ShapeList<>();
+    private Lines lines = new Lines();
     private Line newLine = null;
+    private Rectangles rectangles = new Rectangles();
     private Rectangle newRec = null;
     Color oldColor = Color.BLACK;
+    Color newColor = null;
     int buttonPressed;
-    private boolean squareMode = false;
-    private DefaultListModel<String> coordListModel = new DefaultListModel<>();
 
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
-        drawPanel.setShapes(shapes);
-        jListCoords.setModel(coordListModel);
+        drawPanel.setLines(lines);
+        drawPanel.setRecs(rectangles);
     }
 
     public void updateView() {
@@ -50,12 +49,17 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         drawPanel = new DrawPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jListCoords = new javax.swing.JList();
-        jButton1 = new javax.swing.JButton();
+        changeColorButton = new javax.swing.JButton();
+        jList = new javax.swing.JScrollPane();
+        jList1 = new javax.swing.JList<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        drawPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                drawPanelMouseDragged(evt);
+            }
+        });
         drawPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 drawPanelMouseClicked(evt);
@@ -67,52 +71,50 @@ public class MainFrame extends javax.swing.JFrame {
                 drawPanelMouseReleased(evt);
             }
         });
-        drawPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                drawPanelMouseDragged(evt);
+
+        changeColorButton.setText("change color");
+        changeColorButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                changeColorButtonActionPerformed(evt);
             }
         });
+
+        jList1.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jList.setViewportView(jList1);
 
         javax.swing.GroupLayout drawPanelLayout = new javax.swing.GroupLayout(drawPanel);
         drawPanel.setLayout(drawPanelLayout);
         drawPanelLayout.setHorizontalGroup(
             drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, drawPanelLayout.createSequentialGroup()
+                .addContainerGap(258, Short.MAX_VALUE)
+                .addGroup(drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(jList)
+                    .addComponent(changeColorButton, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                .addContainerGap())
         );
         drawPanelLayout.setVerticalGroup(
             drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, drawPanelLayout.createSequentialGroup()
+                .addComponent(jList, javax.swing.GroupLayout.DEFAULT_SIZE, 265, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(changeColorButton)
+                .addContainerGap())
         );
-
-        jScrollPane1.setViewportView(jListCoords);
-
-        jButton1.setText("Change Color");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+            .addComponent(drawPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton1))
+            .addComponent(drawPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -121,16 +123,10 @@ public class MainFrame extends javax.swing.JFrame {
     private void drawPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanelMousePressed
         if (evt.getButton() == MouseEvent.BUTTON1) {
             newLine = new Line(evt.getPoint(), evt.getPoint(), oldColor);
-            shapes.add(newLine);
-            coordListModel.addElement(newLine.toString());
-            squareMode = false;
-        } else if (evt.getButton() == MouseEvent.BUTTON3) {
-            newRec = new Rectangle(evt.getPoint(), evt.getPoint(), oldColor);
-            shapes.add(newRec);
-            coordListModel.addElement(newRec.toString());
-            squareMode = evt.isControlDown();
+            lines.add(newLine);
         } else {
-            return;
+            newRec = new Rectangle(evt.getPoint(), evt.getPoint(), oldColor);
+            rectangles.add(newRec);
         }
         
 
@@ -140,8 +136,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void drawPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanelMouseClicked
         if (evt.getClickCount() == 2) {
-            shapes.clear();
-            coordListModel.clear();
+            lines.clear();
+            rectangles.clear();
         }
         updateView();
     }//GEN-LAST:event_drawPanelMouseClicked
@@ -153,36 +149,16 @@ public class MainFrame extends javax.swing.JFrame {
     private void drawPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanelMouseDragged
         if (buttonPressed == 1) {
             newLine.setTo(evt.getPoint());
-            if (coordListModel.getSize() > 0) {
-                coordListModel.set(coordListModel.getSize() - 1, newLine.toString());
-            }
-        } else if (buttonPressed == 3) {
-            if (squareMode) {
-                Point from = newRec.getFrom();
-                int dx = evt.getX() - from.x;
-                int dy = evt.getY() - from.y;
-                int size = Math.max(Math.abs(dx), Math.abs(dy));
-                int toX = from.x + (dx < 0 ? -size : size);
-                int toY = from.y + (dy < 0 ? -size : size);
-                newRec.setTo(new Point(toX, toY));
-            } else {
-                newRec.setTo(evt.getPoint());
-            }
-            if (coordListModel.getSize() > 0) {
-                coordListModel.set(coordListModel.getSize() - 1, newRec.toString());
-            }
-        } else {
-            return;
+        } else  {
+            newRec.setTo(evt.getPoint());
         }
         updateView();
     }//GEN-LAST:event_drawPanelMouseDragged
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Color newColor = JColorChooser.showDialog(this, "Choose a color", oldColor);
-        if (newColor != null) {
-            oldColor = newColor;
-        }
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void changeColorButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_changeColorButtonActionPerformed
+        Color newColor = JColorChooser.showDialog(this, "Choix d'une couleur", oldColor);
+        setOldColor(newColor);
+    }//GEN-LAST:event_changeColorButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -220,9 +196,9 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton changeColorButton;
     private DrawPanel drawPanel;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JList jListCoords;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jList;
+    private javax.swing.JList<String> jList1;
     // End of variables declaration//GEN-END:variables
 }

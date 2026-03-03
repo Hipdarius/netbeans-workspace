@@ -1,7 +1,10 @@
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -10,36 +13,38 @@ import java.awt.Point;
 
 /**
  *
- * @author phili
+ * @author darius
  */
 public class DrawPanel extends javax.swing.JPanel {
-    private ShapeList<Shape> shapes = null;
-   
+    
+    private MovingBalls balls = null;
 
     /**
      * Creates new form DrawPanel
      */
     public DrawPanel() {
         initComponents();
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(800, 600));
     }
 
-    public void setShapes(ShapeList<Shape> shapes) {
-        this.shapes = shapes;
+    public void setBalls(MovingBalls balls) {
+        this.balls = balls;
     }
     
-    /**
-     *
-     * @param g
-     */
+    
+    
+   
     @Override
     public void paintComponent(Graphics g) {
-       g.setColor(Color.WHITE);
-       g.fillRect(0,0, getWidth(), getHeight());
-       if(shapes != null) {
-           shapes.draw(g);
-       } 
-       
-   }
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        if (balls != null) {
+            balls.draw(g2);
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -48,12 +53,6 @@ public class DrawPanel extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                formMousePressed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -66,10 +65,6 @@ public class DrawPanel extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMousePressed
-        
-    }//GEN-LAST:event_formMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

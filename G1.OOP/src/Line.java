@@ -1,4 +1,3 @@
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
@@ -10,7 +9,7 @@ import java.awt.Point;
 
 /**
  *
- * @author phili
+ * @author darius
  */
 public class Line extends Shape {
 
@@ -19,17 +18,11 @@ public class Line extends Shape {
     }
 
     public Line(Point from, Point to) {
-        super(from, to, Color.BLACK);
+        super(from, to);
     }
-    
-    
+
     public void draw(Graphics g) {
         g.setColor(color);
         g.drawLine(from.x, from.y, to.x, to.y);
-    }
-    
-    @Override
-    public String toString() {
-        return "L: " + super.toString();
     }
 }

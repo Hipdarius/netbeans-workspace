@@ -10,9 +10,11 @@ import java.awt.Point;
 
 /**
  *
- * @author phili
+ * @author darius
  */
 public class DrawPanel extends javax.swing.JPanel {
+    private Lines lines = null;
+    private Rectangles recs = null;
     private ShapeList<Shape> shapes = null;
    
 
@@ -23,22 +25,33 @@ public class DrawPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    public void setLines(Lines lines) {
+        this.lines = lines;
+    }
+
+    public void setRecs(Rectangles recs) {
+        this.recs = recs;
+    }
+
     public void setShapes(ShapeList<Shape> shapes) {
         this.shapes = shapes;
     }
     
-    /**
-     *
-     * @param g
-     */
+    
     @Override
-    public void paintComponent(Graphics g) {
+   public void paintComponent(Graphics g) {
        g.setColor(Color.WHITE);
        g.fillRect(0,0, getWidth(), getHeight());
-       if(shapes != null) {
+       if (shapes != null) {
            shapes.draw(g);
-       } 
-       
+       } else {
+           if(lines!= null) {
+               lines.draw(g);
+           } 
+           if(recs != null) {
+               recs.draw(g);
+           }
+       }
    }
     /**
      * This method is called from within the constructor to initialize the form.

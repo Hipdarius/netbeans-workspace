@@ -9,25 +9,20 @@ import java.awt.Point;
 
 /**
  *
- * @author phili
+ * @author darius
  */
 public class Rectangle extends Shape {
 
     public Rectangle(Point from, Point to, Color color) {
         super(from, to, color);
     }
-    
+
+    public Rectangle(Point from, Point to) {
+        super(from, to);
+    }
+
     public void draw(Graphics g){
         g.setColor(color);
-        int x = Math.min(from.x, to.x);
-        int y = Math.min(from.y, to.y);
-        int w = Math.abs(to.x - from.x);
-        int h = Math.abs(to.y - from.y);
-        g.drawRect(x, y, w, h);
-    }
-    
-    @Override
-    public String toString() {
-        return "R: " + super.toString();
+        g.drawRect(from.x, from.y, to.x-from.x, to.y-from.y);
     }
 }
