@@ -10,7 +10,7 @@ import java.awt.Point;
 
 /**
  *
- * @author phili
+ * @author darius
  */
 public class DrawPanel extends javax.swing.JPanel {
     private ShapeList<Shape> shapes = null;
