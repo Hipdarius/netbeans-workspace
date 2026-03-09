@@ -1,6 +1,4 @@
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.Timer;
 
 
@@ -23,16 +21,11 @@ public class MainFrame extends javax.swing.JFrame {
      */
     public MainFrame() {
         initComponents();
+        stepButton.setVisible(false);
         setTitle("Emoticon Animation");
         drawPanel.setBalls(balls);
-        balls.addRandom(drawPanel.getPreferredSize().width, drawPanel.getPreferredSize().height);
-        timer = new Timer(20, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                balls.doStep(drawPanel.getWidth(), drawPanel.getHeight());
-                drawPanel.repaint();
-            }
-        });
+        balls.addRandom(drawPanel.getWidth(), drawPanel.getHeight());
+        timer = new Timer(20, this::stepButtonActionPerformed);
         timer.start();
     }
     
@@ -51,8 +44,16 @@ public class MainFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         drawPanel = new DrawPanel();
+        stepButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        stepButton.setText("Step");
+        stepButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                stepButtonActionPerformed(evt);
+            }
+        });
 
         drawPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
@@ -60,15 +61,32 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        javax.swing.GroupLayout drawPanelLayout = new javax.swing.GroupLayout(drawPanel);
+        drawPanel.setLayout(drawPanelLayout);
+        drawPanelLayout.setHorizontalGroup(
+            drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(drawPanelLayout.createSequentialGroup()
+                .addGap(50, 50, 50)
+                .addComponent(stepButton)
+                .addContainerGap(686, Short.MAX_VALUE))
+        );
+        drawPanelLayout.setVerticalGroup(
+            drawPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, drawPanelLayout.createSequentialGroup()
+                .addContainerGap(569, Short.MAX_VALUE)
+                .addComponent(stepButton)
+                .addGap(87, 87, 87))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 800, Short.MAX_VALUE)
+            .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(drawPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addComponent(drawPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 683, Short.MAX_VALUE)
         );
 
         pack();
@@ -78,6 +96,11 @@ public class MainFrame extends javax.swing.JFrame {
         balls.removeBallsAt(evt.getX(),evt.getY());
         drawPanel.repaint();
     }//GEN-LAST:event_drawPanelMousePressed
+
+    private void stepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepButtonActionPerformed
+        balls.doStep(drawPanel.getWidth(), drawPanel.getHeight());
+        drawPanel.repaint();
+    }//GEN-LAST:event_stepButtonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,5 +139,6 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private DrawPanel drawPanel;
+    private javax.swing.JButton stepButton;
     // End of variables declaration//GEN-END:variables
 }

@@ -17,6 +17,7 @@ public class Rectangle extends Shape {
         super(from, to, color);
     }
     
+    @Override
     public void draw(Graphics g){
         g.setColor(color);
         int x = Math.min(from.x, to.x);

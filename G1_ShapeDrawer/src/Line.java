@@ -23,6 +23,7 @@ public class Line extends Shape {
     }
     
     
+    @Override
     public void draw(Graphics g) {
         g.setColor(color);
         g.drawLine(from.x, from.y, to.x, to.y);

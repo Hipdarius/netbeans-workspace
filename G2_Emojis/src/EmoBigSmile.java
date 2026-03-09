@@ -1,19 +1,25 @@
-import java.awt.BasicStroke;
-import java.awt.Graphics2D;
+import java.awt.Graphics;
 
-public class EmoBigSmile extends EmoBase {
+public class EmoBigSmile extends Emoticon {
     public EmoBigSmile(double x, double y, int radius, double xStep, double yStep) {
         super(x, y, radius, xStep, yStep);
     }
 
     @Override
-    protected void drawMouth(Graphics2D g2, int faceX, int faceY, int diameter) {
-        int mouthW = (int) Math.round(diameter * 0.65);
-        int mouthH = (int) Math.round(diameter * 0.4);
+    protected void drawMouth(Graphics g, int faceX, int faceY, int diameter) {
+        int mouthW = (int) Math.round(diameter * 0.7);
         int mouthX = faceX + (diameter - mouthW) / 2;
-        int mouthY = faceY + (int) Math.round(diameter * 0.5);
-        g2.setStroke(new BasicStroke(4));
-        g2.drawArc(mouthX, mouthY, mouthW, mouthH, 180, 180);
-        g2.setStroke(new BasicStroke(1));
+        int mouthY = faceY + (int) Math.round(diameter * 0.56);
+        int height = Math.max(3, (int) Math.round(diameter * 0.22));
+        int thickness = Math.max(2, (int) Math.round(diameter * 0.04));
+        int centerX = mouthX + mouthW / 2;
+
+        for (int t = 0; t < thickness; t++) {
+            for (int x = mouthX; x <= mouthX + mouthW; x++) {
+                int dx = x - centerX;
+                int y = mouthY + t + (dx * dx) / Math.max(1, (mouthW * mouthW) / (4 * height));
+                g.drawLine(x, y, x, y);
+            }
+        }
     }
 }

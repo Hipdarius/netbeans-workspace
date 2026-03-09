@@ -1,24 +1,12 @@
 
-import java.awt.Color;
-import java.awt.Graphics2D;
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author phili
- */
 public class Ball {
     private double x;
     private double y;
     private int radius;
     private double xStep;
     private double yStep;
-    private Color outline = Color.BLACK;
-    
+    private java.awt.Color outline = java.awt.Color.BLACK;
+
     public Ball(double x, double y, int radius, double xStep, double yStep) {
         this.x = x;
         this.y = y;
@@ -54,28 +42,28 @@ public class Ball {
     public void setyStep(int yStep) {
         this.yStep = yStep;
     }
-    
+
     public void doStep(int panelW, int panelH) {
         if (panelW <= 0 || panelH <= 0) {
             return;
         }
         x += xStep;
         y += yStep;
-        
+
         int minX = radius;
         int maxX = Math.max(radius, panelW - radius);
         int minY = radius;
         int maxY = Math.max(radius, panelH - radius);
-        
-        if(x < minX) {
+
+        if (x < minX) {
             x = minX;
             xStep = Math.abs(xStep);
         } else if (x > maxX) {
             x = maxX;
             xStep = -Math.abs(xStep);
         }
-        
-        if(y < minY) {
+
+        if (y < minY) {
             y = minY;
             yStep = Math.abs(yStep);
         } else if (y > maxY) {
@@ -83,24 +71,24 @@ public class Ball {
             yStep = -Math.abs(yStep);
         }
     }
-    
-    public void draw(Graphics2D g2) {
-        g2.setColor(outline);
-        g2.drawOval((int)x - radius, (int)y - radius, radius * 2, radius * 2);
+
+    public void draw(java.awt.Graphics g) {
+        g.setColor(outline);
+        g.drawOval((int) x - radius, (int) y - radius, radius * 2, radius * 2);
     }
-    
-    public boolean isInside(int pX,int pY) {
+
+    public boolean isInside(int pX, int pY) {
         double a = pX - x;
-        double b = pY -y;
-        double c = Math.sqrt(a*a + b*b);
+        double b = pY - y;
+        double c = Math.sqrt(a * a + b * b);
         return c <= radius;
     }
 
-    public void setOutline(Color outline) {
+    public void setOutline(java.awt.Color outline) {
         this.outline = outline;
     }
 
-    public Color getOutline() {
+    public java.awt.Color getOutline() {
         return outline;
     }
 }
