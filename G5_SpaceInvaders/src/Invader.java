@@ -3,6 +3,8 @@ import java.awt.Graphics;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Invader extends MovingObject {
+    private static final long serialVersionUID = 1L;
+
     private static final int SIZE = 30;
     private static final int MIN_SPEED = -2;
     private static final int MAX_SPEED = 2;
@@ -25,12 +27,11 @@ public class Invader extends MovingObject {
         g.drawLine(x + width, y, x, y + height);
     }
 
-    @SuppressWarnings("deprecation")
-    public void move(int pWidth, int pHeight) {
+    public void moveWithinBounds(int panelWidth, int panelHeight) {
         move();
 
-        int maxX = Math.max(0, pWidth - width);
-        int maxY = Math.max(0, (pHeight * 3) / 4 - height);
+        int maxX = Math.max(0, panelWidth - width);
+        int maxY = Math.max(0, (panelHeight * 3) / 4 - height);
 
         if (x < 0) {
             x = 0;

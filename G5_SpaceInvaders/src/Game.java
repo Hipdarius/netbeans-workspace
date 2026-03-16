@@ -51,7 +51,7 @@ public class Game {
 
     public void move(int width, int height) {
         for (Invader invader : allInvaders) {
-            invader.move(width, height);
+            invader.moveWithinBounds(width, height);
         }
 
         if (missile != null) {
@@ -95,3 +95,4 @@ public class Game {
         missile = new Missile(missileX, missileY);
     }
 }
+

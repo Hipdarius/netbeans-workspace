@@ -1,17 +1,16 @@
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import javax.swing.JPanel;
+import java.beans.Beans;
 
-public class DrawPanel extends JPanel {
-    private Game game;
+public class DrawPanel extends javax.swing.JPanel {
+    private static final long serialVersionUID = 1L;
+
+    private transient Game game;
 
     public DrawPanel() {
         initComponents();
-    }
-
-    private void initComponents() {
-        setBackground(Color.BLACK);
+        setBackground(Beans.isDesignTime() ? Color.WHITE : Color.BLACK);
         setPreferredSize(new Dimension(MainFrame.PANEL_WIDTH, MainFrame.PANEL_HEIGHT));
         setFocusable(true);
     }
@@ -23,6 +22,11 @@ public class DrawPanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+
+        if (Beans.isDesignTime()) {
+            return;
+        }
+
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
 
@@ -30,4 +34,24 @@ public class DrawPanel extends JPanel {
             game.draw(g);
         }
     }
+
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // End of variables declaration//GEN-END:variables
 }

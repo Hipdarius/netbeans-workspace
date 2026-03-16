@@ -2,6 +2,8 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class Missile extends MovingObject {
+    private static final long serialVersionUID = 1L;
+
     private static final int WIDTH = 5;
     private static final int HEIGHT = 10;
     private static final int FLAME_HEIGHT = 5;

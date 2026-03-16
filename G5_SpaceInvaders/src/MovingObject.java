@@ -3,6 +3,8 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 public abstract class MovingObject extends Rectangle {
+    private static final long serialVersionUID = 1L;
+
     private Color color;
     private int dX;
     private int dY;
