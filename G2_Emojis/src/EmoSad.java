@@ -11,6 +11,11 @@ public class EmoSad extends Emoticon {
         int mouthH = Math.max(2, (int) Math.round(diameter * 0.18));
         int mouthX = faceX + (diameter - mouthW) / 2;
         int mouthY = faceY + (int) Math.round(diameter * 0.58);
+        
+        // int mouthX = x-radius * 0.5;
+        // int mouthY = y+radius * 0,25;
+        // int mouthW = radius * 2 * 0,5;
+        // int mouthH = radius * 2 * 0,5;
 
         g.drawArc(mouthX, mouthY, mouthW, mouthH, 0, 180);
     }

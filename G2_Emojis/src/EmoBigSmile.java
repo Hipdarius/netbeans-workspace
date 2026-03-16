@@ -12,6 +12,11 @@ public class EmoBigSmile extends Emoticon {
         int thickness = Math.max(2, (int) Math.round(diameter * 0.04));
         int mouthX = faceX + (diameter - mouthW) / 2;
         int mouthY = faceY + (int) Math.round(diameter * 0.52);
+        
+        // int mouthX = x-radius * 0.5;
+        // int mouthY = y-radius * 0,5;
+        // int mouthW = radius * 2 * 0,5;
+        // int mouthH = radius * 2 * 0,5;
 
         for (int t = 0; t < thickness; t++) {
             g.drawArc(mouthX, mouthY + t, mouthW, mouthH, 180, 180);

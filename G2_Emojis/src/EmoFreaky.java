@@ -4,6 +4,9 @@ import java.awt.Graphics;
 public class EmoFreaky extends Emoticon {
     private static final Color FACE = new Color(255, 225, 60);
     private static final Color TONGUE = new Color(255, 120, 160);
+    
+    //boolean tongueOut = false;
+    //int counter = (int)(Math.random() * 10);
 
     public EmoFreaky(double x, double y, int radius, double xStep, double yStep) {
         super(x, y, radius, xStep, yStep);
@@ -29,7 +32,25 @@ public class EmoFreaky extends Emoticon {
             g.setColor(FACE);
             g.fillRect(tongueX, tongueY, tongueW, tongueH / 2);
         }
+        /*if(tongueOut) {
+            g.setColor(Color.PINK);
+            g.fillArc((int) (x-radius*0.3),
+                      (int) (y-radius*0.25),
+                      (int) (radius),
+                      0, -180);
+        }
+        */
     }
+    
+    /*@Override
+    public void doStep(int width, int height) {
+        super.doStep(width, height);
+        counter++;
+        if(counter >= 5) {
+            tongueOut = !tongueOut;
+            counter = 0;
+        }
+    }*/
 
     private boolean isTongueVisible() {
         return (System.currentTimeMillis() / 500) % 2 == 0;
