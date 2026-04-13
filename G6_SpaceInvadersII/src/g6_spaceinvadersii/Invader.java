@@ -15,14 +15,9 @@ public class Invader extends MovingObject {
     }
 
     public boolean collidesWith(MovingObject movingObject) {
-        /*return x < movingObject.x + movingObject.width
-            && x + width > movingObject.x
-            && y < movingObject.y + movingObject.height
-            && y + height > movingObject.y;*/
-        
         Rectangle r1 = new Rectangle(x, y, width, height);
-        Rectangle r2 = new Rectangle (x, y, width, height);
-        
+        Rectangle r2 = new Rectangle(movingObject.x, movingObject.y, movingObject.width, movingObject.height);
+
         return r1.intersects(r2);
     }
 
