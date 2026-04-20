@@ -1,7 +1,6 @@
 package g6_spaceinvadersii;
 
 import java.awt.event.ActionEvent;
-import javax.swing.DefaultListModel;
 import javax.swing.Timer;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -15,24 +14,26 @@ public class MainFrame extends javax.swing.JFrame {
         setTitle("Space Invaders II");
         initGame();
         initTimer();
-        setLocationRelativeTo(null);
         stepButton.setVisible(false);
     }
     
     private void initGame() {
-        game = new Game(drawPanel.getPreferredSize().width, drawPanel.getPreferredSize().height);
+        int width = drawPanel.getPreferredSize().width;
+        int height = drawPanel.getPreferredSize().height;
+        game = new Game(width, height);
         drawPanel.setGame(game);
         scoreLabel.setText(game.getScoreText());
     }
 
     private void initTimer() {
-        timer = new Timer(TIMER_DELAY, (ActionEvent e) -> onTimerTick());
+        timer = new Timer(TIMER_DELAY, this::onTimerTick);
     }
 
-    private void onTimerTick() {
+    private void onTimerTick(ActionEvent e) {
         game.doStep();
         scoreLabel.setText(game.getScoreText());
         drawPanel.repaint();
+
         if (game.checkGameOver()) {
             timer.stop();
             game.getAllScores().add(game.getScore());
@@ -42,11 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     private void refreshScoreList() {
-        DefaultListModel<Integer> model = new DefaultListModel<>();
-        for (Object score : game.toArray()) {
-            model.addElement((Integer) score);
-        }
-        scoreList.setModel(model);
+        scoreList.setListData(game.getAllScores().toArray());
     }
 
     private void startButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startButtonActionPerformed
