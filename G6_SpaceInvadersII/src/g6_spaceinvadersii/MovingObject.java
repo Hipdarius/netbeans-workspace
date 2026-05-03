@@ -50,6 +50,5 @@ public class MovingObject {
 
     public void draw(Graphics g) {
         g.setColor(color);
-        g.fillRect(x, y, width, height);
     }
 }

@@ -6,7 +6,7 @@ import java.awt.Graphics;
 public class Player extends MovingObject {
 
     public Player(int xCenter, int y) {
-        super(xCenter - 15, y, 30, 30, Color.BLUE);
+        super(xCenter - 10, y, 20, 20, Color.BLUE);
     }
 
     public void setNewXCenter(int xCenter, int panelWidth) {
@@ -17,10 +17,15 @@ public class Player extends MovingObject {
         if (x > panelWidth - width) {
             x = panelWidth - width;
         }
+        
+        if(getX() < 0 && getX() + 20 > width) {
+            setX(xCenter);
+        }
     }
 
     @Override
     public void draw(Graphics g) {
+        super.draw(g);
         int cx = x + width / 2;
         g.setColor(color);
         g.drawLine(cx, y, x, y + height);
