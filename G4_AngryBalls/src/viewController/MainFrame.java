@@ -1,8 +1,11 @@
+package viewController;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
+import models.Game;
 import javax.swing.SwingUtilities;
 import javax.swing.Timer;
 
@@ -76,17 +79,17 @@ public class MainFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        drawPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                drawPanelMouseDragged(evt);
+            }
+        });
         drawPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 drawPanelMousePressed(evt);
             }
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 drawPanelMouseReleased(evt);
-            }
-        });
-        drawPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseDragged(java.awt.event.MouseEvent evt) {
-                drawPanelMouseDragged(evt);
             }
         });
 
