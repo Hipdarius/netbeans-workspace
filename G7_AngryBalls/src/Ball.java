@@ -12,8 +12,8 @@ import java.awt.Graphics;
  * @author Darius
  */
 public class Ball {
-    private double x, y;
     private int r;
+    private double x, y;
     private Color color;
 
     public Ball(double x, double y, int r, Color color) {
@@ -21,6 +21,10 @@ public class Ball {
         this.y = y;
         this.r = r;
         this.color = color;
+    }
+
+    public int getR() {
+        return r;
     }
 
     public double getX() {
@@ -31,8 +35,8 @@ public class Ball {
         return y;
     }
 
-    public int getR() {
-        return r;
+    public void setR(int r) {
+        this.r = r;
     }
 
     public void setX(double x) {
@@ -46,16 +50,12 @@ public class Ball {
     public void draw(Graphics g) {
         g.setColor(color);
         g.fillOval((int) x - r, (int) y - r, r * 2, r * 2);
-
-        int rr = r / 4;
-        int cx = (int) (x + r / 2.0);
-        int cy = (int) (y - r / 2.0);
         g.setColor(Color.WHITE);
-        g.fillOval(cx - rr, cy - rr, rr * 2, rr * 2);
+        g.fillOval((int) (x + r / 2), (int) (y - r / 2), r / 4, r / 4);
     }
 
-    public boolean isTouching(Ball pBall) {
-        double distance = Math.sqrt(Math.pow(pBall.x - this.x, 2) + Math.pow(pBall.y - this.y, 2));
-        return distance <= this.r + pBall.r;
+    public boolean isTouching(Ball ball) {
+        double distance = Math.sqrt(Math.pow(ball.x - x, 2) + Math.pow(ball.y - y, 2));
+        return distance <= r + ball.r;
     }
 }

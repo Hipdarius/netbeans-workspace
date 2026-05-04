@@ -21,20 +21,10 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         setTitle("Angry Balls");
-
-        int w = drawPanel.getWidth();
-        int h = drawPanel.getHeight();
-        if (w == 0 || h == 0) {
-            w = 700;
-            h = 500;
-            drawPanel.setSize(w, h);
-        }
-        game = new Game(w, h);
+        game = new Game(drawPanel.getWidth(), drawPanel.getHeight());
         drawPanel.setGame(game);
-
         stepButton.setVisible(false);
-
-        timer = new Timer(10, this::stepButtonActionPerformed);
+        timer = new Timer(10, stepButton.getActionListeners()[0]);
     }
 
     private void drawPanelMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_drawPanelMousePressed
@@ -60,21 +50,13 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_drawPanelMouseReleased
 
     private void stepButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stepButtonActionPerformed
-        int result = game.move();
-        if (result == 1) {
+        if (game.move() == 1) {
             timer.stop();
             game.playerBallReset();
-            drawPanel.repaint();
         }
         if (game.isOver()) {
             timer.stop();
-            int w = drawPanel.getWidth();
-            int h = drawPanel.getHeight();
-            if (w == 0 || h == 0) {
-                w = 700;
-                h = 500;
-            }
-            game = new Game(w, h);
+            game = new Game(drawPanel.getWidth(), drawPanel.getHeight());
             drawPanel.setGame(game);
         }
         drawPanel.repaint();

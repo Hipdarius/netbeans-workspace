@@ -11,19 +11,10 @@ import java.awt.Color;
  */
 public class MovingBall extends Ball {
 
-    private double dX = 0;
-    private double dY = 0;
+    private double dX, dY;
 
     public MovingBall(double x, double y, int r, Color color) {
         super(x, y, r, color);
-    }
-
-    public double getdX() {
-        return dX;
-    }
-
-    public double getdY() {
-        return dY;
     }
 
     public void setdX(double dX) {
@@ -34,9 +25,17 @@ public class MovingBall extends Ball {
         this.dY = dY;
     }
 
+    public double getdX() {
+        return dX;
+    }
+
+    public double getdY() {
+        return dY;
+    }
+
     public void move() {
         setX(getX() + dX);
         setY(getY() + dY);
-        dY += 0.15;
+        dY += 0.2;
     }
 }
