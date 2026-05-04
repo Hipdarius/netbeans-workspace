@@ -17,7 +17,7 @@ Every project is a standalone NetBeans Java application built around Swing.
 | `F06_Checkers` | Checkers board with pieces. |
 | `G5_SpaceInvaders` | First Space Invaders implementation. |
 | `G6_SpaceInvadersII` | Refined Space Invaders with score tracking and inheritance cleanup. |
-| `G7_AngryBalls` | Physics ball launcher with gravity, a wall, and red targets. |
+| `G4_AngryBalls` | Physics ball launcher with gravity, a wall, and red targets. |
 | `X1_Snake` | Classic Snake game. |
 | `X2_PongGame` | Classic Pong with a simple AI opponent. |
 
