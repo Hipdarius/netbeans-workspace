@@ -20,6 +20,7 @@ Every project is a standalone NetBeans Java application built around Swing.
 | `G4_AngryBalls` | Physics ball launcher with gravity, a wall, and red targets. |
 | `X1_Snake` | Classic Snake game. |
 | `X2_PongGame` | Classic Pong with a simple AI opponent. |
+| `X3_Demo` | Friendsbook demo with `Person`/`Persons` objects and save/load file I/O. |
 
 ## Building
 
