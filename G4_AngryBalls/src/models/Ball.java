@@ -14,9 +14,9 @@ import java.awt.Graphics;
  * @author Darius
  */
 public class Ball {
-    private int r;
-    private double x, y;
-    private Color color;
+    protected int r;
+    protected double x, y;
+    protected Color color;
 
     public Ball(double x, double y, int r, Color color) {
         this.x = x;

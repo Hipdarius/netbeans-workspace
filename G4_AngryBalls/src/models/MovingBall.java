@@ -36,8 +36,8 @@ public class MovingBall extends Ball {
     }
 
     public void move() {
-        setX(getX() + dX);
-        setY(getY() + dY);
+        x += dX;
+        y += dY;
         dY += 0.2;
     }
 }
