@@ -1,9 +1,14 @@
 package models;
 
 
+import java.io.BufferedReader;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -92,6 +97,48 @@ public class Game {
 
     public void playerBallReset() {
         playerBall = new MovingBall(20, height - 20, 20, Color.GREEN);
+    }
+
+    public void clear() {
+        alBalls.clear();
+        mousePosition = null;
+        playerBallReset();
+    }
+
+    public void saveToFile(String fileName) throws IOException {
+        try (PrintWriter out = new PrintWriter(new FileWriter(fileName))) {
+            out.println(width + ";" + height);
+            out.println(playerBall.getX() + ";" + playerBall.getY() + ";" + playerBall.getR() + ";" + playerBall.getdX() + ";" + playerBall.getdY());
+            out.println(alBalls.size());
+            for (int i = 0; i < alBalls.size(); i++) {
+                Ball ball = alBalls.get(i);
+                out.println(ball.getX() + ";" + ball.getY() + ";" + ball.getR());
+            }
+        }
+    }
+
+    public void loadFromFile(String fileName) throws IOException {
+        try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
+            String[] items = in.readLine().split(";");
+            width = Integer.parseInt(items[0]);
+            height = Integer.parseInt(items[1]);
+
+            items = in.readLine().split(";");
+            playerBall = new MovingBall(Double.parseDouble(items[0]), Double.parseDouble(items[1]), Integer.parseInt(items[2]), Color.GREEN);
+            playerBall.setdX(Double.parseDouble(items[3]));
+            playerBall.setdY(Double.parseDouble(items[4]));
+
+            alBalls.clear();
+            int numberOfBalls = Integer.parseInt(in.readLine());
+            for (int i = 0; i < numberOfBalls; i++) {
+                items = in.readLine().split(";");
+                double x = Double.parseDouble(items[0]);
+                double y = Double.parseDouble(items[1]);
+                int r = Integer.parseInt(items[2]);
+                alBalls.add(new Ball(x, y, r, Color.RED));
+            }
+            mousePosition = null;
+        }
     }
 
     public boolean isOver() {
