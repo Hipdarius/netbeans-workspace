@@ -60,4 +60,9 @@ public class Ball {
         double distance = Math.sqrt(Math.pow(ball.x - x, 2) + Math.pow(ball.y - y, 2));
         return distance <= r + ball.r;
     }
+
+    @Override
+    public String toString() {
+        return x + ";" + y + ";" + r + ";" + String.format("#%06X", color.getRGB() & 0xFFFFFF);
+    }
 }
