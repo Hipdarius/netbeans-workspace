@@ -4,7 +4,8 @@ This repository collects every project written for the **SciPr** (Scientific
 Programming) course of class **2CI** at the **Lycée des Arts et Métiers**,
 covered during the **2026** school year.
 
-Every project is a standalone NetBeans Java application built around Swing.
+Every project is a standalone NetBeans Java application. Most projects are
+built around Swing, while some exercises are console programs.
 
 ## Projects
 
@@ -21,6 +22,7 @@ Every project is a standalone NetBeans Java application built around Swing.
 | `X1_Snake` | Classic Snake game. |
 | `X2_PongGame` | Classic Pong with a simple AI opponent. |
 | `X3_Demo` | Friendsbook demo with `Person`/`Persons` objects and save/load file I/O. |
+| `X4_StaticListVsArrayList` | Console exercise comparing fixed arrays with `ArrayList` operations and timing. |
 
 ## Building
 
