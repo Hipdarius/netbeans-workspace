@@ -19,6 +19,7 @@ built around Swing, while some exercises are console programs.
 | `G5_SpaceInvaders` | First Space Invaders implementation. |
 | `G6_SpaceInvadersII` | Refined Space Invaders with score tracking and inheritance cleanup. |
 | `G4_AngryBalls` | Physics ball launcher with gravity, a wall, and red targets. |
+| `H1_CryptoBox` | Message encryption/decryption exercise with `.cry` file save/load. |
 | `X1_Snake` | Classic Snake game. |
 | `X2_PongGame` | Classic Pong with a simple AI opponent. |
 | `X3_Demo` | Friendsbook demo with `Person`/`Persons` objects and save/load file I/O. |
