@@ -1,3 +1,9 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -115,5 +121,17 @@ public class CryptoBox {
         }
 
         return decodedMessage;
+    }
+
+    public void saveToFile(String fileName, String encryptedMessage) throws IOException {
+        try (PrintWriter out = new PrintWriter(new FileWriter(fileName))) {
+            out.println(encryptedMessage);
+        }
+    }
+
+    public String loadFromFile(String fileName) throws IOException {
+        try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
+            return in.readLine();
+        }
     }
 }

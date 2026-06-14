@@ -3,12 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -24,11 +20,6 @@ public class MainFrame extends javax.swing.JFrame {
     public MainFrame() {
         initComponents();
         setTitle("CryptoBox");
-        loadButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                loadButtonActionPerformed(evt);
-            }
-        });
         saveButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 saveButtonActionPerformed(evt);
@@ -81,6 +72,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setText("Encrypted message:");
 
         loadButton.setText("load");
+        loadButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                loadButtonActionPerformed(evt);
+            }
+        });
 
         saveButton.setText("save");
 
@@ -147,9 +143,8 @@ public class MainFrame extends javax.swing.JFrame {
         if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             String fileName = fc.getSelectedFile().getPath();
             try {
-                BufferedReader in = new BufferedReader(new FileReader(fileName));
-                cipherTextField.setText(in.readLine());
-                in.close();
+                String encryptedMessage = cryptoBox.loadFromFile(fileName);
+                cipherTextField.setText(encryptedMessage);
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
@@ -167,9 +162,7 @@ public class MainFrame extends javax.swing.JFrame {
             }
             
             try {
-                PrintWriter out = new PrintWriter(new FileWriter(fileName));
-                out.print(cipherTextField.getText());
-                out.close();
+                cryptoBox.saveToFile(fileName, cipherTextField.getText());
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(this, ex.getMessage());
             }
