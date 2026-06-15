@@ -5,6 +5,8 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -79,6 +81,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         saveButton.setText("save");
+        saveButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -136,35 +143,30 @@ public class MainFrame extends javax.swing.JFrame {
         clearTextField.setText(clearText);
     }//GEN-LAST:event_decryptButtonActionPerformed
 
-    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        File currentFile = new File(System.getProperty("user.dir"));
-        JFileChooser fc = new JFileChooser(currentFile);
+    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+        JFileChooser fileChooser = new JFileChooser(new File(System.getProperty("user.dir")));
+        int returnval = fileChooser.showOpenDialog(this);
         
-        if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-            String fileName = fc.getSelectedFile().getPath();
+        if(returnval == JFileChooser.APPROVE_OPTION) {
+            String fileName = fileChooser.getSelectedFile().getAbsolutePath();
             try {
-                String encryptedMessage = cryptoBox.loadFromFile(fileName);
-                cipherTextField.setText(encryptedMessage);
+                String cipher = cryptoBox.loadFromFile(fileName);
+                cipherTextField.setText(cipher);
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-    }
+    }//GEN-LAST:event_saveButtonActionPerformed
 
-    private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
-        File currentFile = new File(System.getProperty("user.dir"));
-        JFileChooser fc = new JFileChooser(currentFile);
-        
-        if (fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-            String fileName = fc.getSelectedFile().getPath();
-            if (!fileName.endsWith(".cry")) {
-                fileName += ".cry";
-            }
-            
+    private void loadButtonActionPerformed(java.awt.event.ActionEvent evt) {
+        JFileChooser fileChooser = new JFileChooser();
+        int returnval = fileChooser.showSaveDialog(this);
+        if(returnval == JFileChooser.APPROVE_OPTION) {
+            String filename = fileChooser.getSelectedFile().getAbsolutePath();
             try {
-                cryptoBox.saveToFile(fileName, cipherTextField.getText());
+                cryptoBox.saveToFile(filename, cipherTextField.getText());
             } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
+                Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }

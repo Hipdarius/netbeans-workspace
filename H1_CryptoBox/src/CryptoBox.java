@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -123,13 +124,13 @@ public class CryptoBox {
         return decodedMessage;
     }
 
-    public void saveToFile(String fileName, String encryptedMessage) throws IOException {
+    public void saveToFile(String fileName, String line) throws IOException {
         try (PrintWriter out = new PrintWriter(new FileWriter(fileName))) {
-            out.println(encryptedMessage);
+            out.println(line);
         }
     }
 
-    public String loadFromFile(String fileName) throws IOException {
+    public String loadFromFile(String fileName) throws IOException, FileNotFoundException {
         try (BufferedReader in = new BufferedReader(new FileReader(fileName))) {
             return in.readLine();
         }
