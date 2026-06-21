@@ -1,0 +1,151 @@
+Devoir SCIPR II,2 - Mock H1/H2 + Angry Balls Base
+
+General
+Open the project U1_MockTestJune and compile it immediately. The GUI is already
+prepared, but the important methods and button events are incomplete.
+
+Already provided:
+- the NetBeans-style project structure
+- the GUI layout and button objects in MainFrame
+- action listener wiring that calls the empty button methods
+- the matrices C and invC in CryptoBox
+- the class names, attributes and method signatures
+
+The exercise focuses on:
+- H1 CryptoBox: 2D static arrays, matrix multiplication, and file I/O
+- G4/H2 Angry Balls: basic OOP classes plus text file save/load
+- MainFrame: button handlers and JFileChooser setup
+
+Not included:
+- H3 Polygon/Asteroids geometry
+- Timer/chronometer code
+
+Class CryptoBox [34 points]
+
+This class encrypts and decrypts text using the static 2D arrays C and invC.
+
+multiply [8 points]
+Implement multiply(int[][] A, int[][] B). The method returns the matrix product A * B.
+Use three nested loops.
+
+encodeMessage [10 points]
+Encode the text passed as parameter:
+- add spaces until the text length is divisible by C.length
+- create matrix M with C.length rows
+- fill M column by column with the ASCII codes of the characters
+- compute B = C * M
+- return the values of B column by column, separated by semicolons
+- do not leave a final semicolon at the end
+
+decodeMessage [8 points]
+Decode a semicolon-separated encrypted message:
+- split the text at semicolons
+- rebuild matrix B column by column
+- compute M = invC * B
+- return the characters of M column by column
+
+loadFromFile [4 points]
+Read and return the first line from a text file. Use BufferedReader, FileReader and
+try-with-resources.
+
+saveToFile [4 points]
+Write the string line to a text file. Use PrintWriter, FileWriter and try-with-resources.
+
+Class Ball [18 points]
+
+Constructor and accessors [6 points]
+Initialize x, y, r and color. Implement the required getters and setters.
+
+draw [4 points]
+Draw a filled ball without border using color. Add a small white highlight in the upper-right
+part of the ball.
+
+isTouching [4 points]
+Return true if this ball touches the ball passed as parameter. Use the distance between
+the centers and compare it with the sum of the radii.
+
+toString [4 points]
+Return one ball in this file format:
+x;y;r;colorRGB
+
+Class MovingBall [8 points]
+
+Constructor and accessors [4 points]
+Use the Ball constructor and manage the dX and dY movement attributes.
+
+move [4 points]
+Update x and y with dX and dY. Then increase dY by 0.15.
+
+Class Game [26 points]
+
+Constructor [5 points]
+Initialize width and height with the parameters. Create a new ArrayList for alBalls.
+Create the green playerBall in the lower-left corner with radius 20. Add 10 red balls
+at valid random positions on the right half of the drawing area.
+
+addRandomBall [3 points]
+Add one red ball with radius 20 at a random valid position.
+
+clearBalls [2 points]
+Remove all red balls from the list.
+
+getBallCount [1 point]
+Return the number of red balls in alBalls.
+
+draw [3 points]
+Draw all red balls, then draw the green playerBall if it exists.
+
+saveToTextFile [6 points]
+Save all red balls from alBalls into a text file, one ball per line. Use PrintWriter,
+FileWriter with StandardCharsets.UTF_8, and the toString method of Ball.
+
+loadFromTextFile [6 points]
+Load all red balls from a text file:
+- clear the current list by creating a new ArrayList
+- read the file line by line
+- split every line at semicolons
+- rebuild x, y, r and color
+- add the new Ball to alBalls
+- reset playerBall to the lower-left starting position
+
+Class DrawPanel [5 points]
+
+setGame [1 point]
+Store the Game object passed as parameter.
+
+paintComponent [4 points]
+Draw the black background. If a game exists, draw the game.
+
+Class MainFrame [24 points]
+
+The GUI components and action listener connections are already present. Complete only
+the event methods listed below.
+
+encryptButtonActionPerformed [3 points]
+Read clearTextField, encode the text and display the result in cipherTextField.
+
+decryptButtonActionPerformed [3 points]
+Read cipherTextField, decode the text and display the result in clearTextField.
+
+loadCryptoButtonActionPerformed [5 points]
+Open a JFileChooser in the current project directory. Use a FileNameExtensionFilter
+for Crypto Files (*.cry). If the user chooses a file, load it with cryptoBox.loadFromFile
+and display the result in cipherTextField. Handle IOException with Logger and
+JOptionPane.
+
+saveCryptoButtonActionPerformed [5 points]
+Open a JFileChooser in save mode. Use the same .cry filter. Add the extension .cry
+if it is missing. Save the content of cipherTextField with cryptoBox.saveToFile.
+Handle IOException with Logger and JOptionPane.
+
+addBallButtonActionPerformed [2 points]
+Add one random ball to the game and repaint the drawPanel.
+
+clearBallsButtonActionPerformed [2 points]
+Clear all red balls and repaint the drawPanel.
+
+loadBallsButtonActionPerformed [2 points]
+Open an Angry Balls file (*.abs), load it with game.loadFromTextFile and repaint.
+
+saveBallsButtonActionPerformed [2 points]
+Save the current Angry Balls list to an *.abs file. Add the extension if missing.
